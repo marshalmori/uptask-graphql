@@ -60,14 +60,16 @@ const resolvers = {
       }
 
       // Dar acceso a la app
-
       return {
         token: crearToken(existeUsuario, process.env.SECRETA, "24hr"),
       };
     },
-    nuevoProyecto: async (_, { input }) => {
+    nuevoProyecto: async (_, { input }, ctx) => {
       try {
         const proyecto = new Proyecto(input);
+
+        // asociar el creador
+        proyecto.creador = ctx.usuario.id; //falando que aqui é o problema
 
         // almacenarlo en la BD
         const resultado = await proyecto.save();
