@@ -44,6 +44,7 @@ const typeDefs = gql`
     crearUsuario(input: UsuarioInput): String
     autenticarUsuario(input: AutenticarInput): Token
     nuevoProyecto(input: ProyectoInput): Proyecto
+    actualizarProyecto(id: ID!, input: ProyectoInput): Proyecto
   }
 `;
 

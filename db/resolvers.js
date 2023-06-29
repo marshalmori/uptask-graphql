@@ -79,6 +79,24 @@ const resolvers = {
         console.log(error);
       }
     },
+    actualizarProyecto: async (_, { id, input }, ctx) => {
+      // Revisar si el proyecto existe o no.
+      let proyecto = await Proyecto.findById(id);
+
+      if (!proyecto) {
+        throw new Error("Proyecto no encontrado");
+      }
+
+      // Revisar que si la persona que trata de editarlo, es el creador
+      if (proyecto.creador.toString() !== ctx.usuario.id) {
+        throw new Error("No tienes las credenciales para editar");
+      }
+      // Guardar el proyecto
+      proyecto = await Proyecto.findOneAndUpdate({ _id: id }, input, {
+        new: true,
+      });
+      return proyecto;
+    },
   },
 };
 
