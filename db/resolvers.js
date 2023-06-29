@@ -12,7 +12,12 @@ const crearToken = (usuario, secreta, expiresIn) => {
 };
 
 const resolvers = {
-  Query: {},
+  Query: {
+    obtenerProyectos: async (_, {}, ctx) => {
+      const proyectos = await Proyecto.find({ creador: ctx.usuario.id });
+      return proyectos;
+    },
+  },
   Mutation: {
     crearUsuario: async (_, { input }, ctx) => {
       const { email, password } = input;
